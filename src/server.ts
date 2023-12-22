@@ -1,15 +1,14 @@
 import { Server } from 'http';
 import app from './app';
-import subscribeToEvents from './app/events';
 import config from './config';
 import { errorlogger, logger } from './shared/logger';
-import { RedisClient } from './shared/redis';
+// import { RedisClient } from './shared/redis';
 
 
 async function bootstrap() {
-  await RedisClient.connect().then(() => {
-    subscribeToEvents()
-  });
+  // await RedisClient.connect().then(() => {
+  //   subscribeToEvents()
+  // });
   const server: Server = app.listen(config.port, () => {
     logger.info(`Server running on port ${config.port}`);
   });
@@ -32,12 +31,7 @@ async function bootstrap() {
   process.on('uncaughtException', unexpectedErrorHandler);
   process.on('unhandledRejection', unexpectedErrorHandler);
 
-  // process.on('SIGTERM', () => {
-  //   logger.info('SIGTERM received');
-  //   if (server) {
-  //     server.close();
-  //   }
-  // });
+  
 }
 
 bootstrap();
